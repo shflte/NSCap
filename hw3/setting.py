@@ -1,14 +1,14 @@
 import random
 class Setting():
-    def __init__(self, host_num=3, total_time=10000, packet_num=500, packet_size=5, max_colision_wait_time=20, p_resend=0.3, link_delay=1, seed=None) -> None:
+    def __init__(self, host_num=3, total_time=10000, packet_num=500, packet_size=5, max_colision_wait_time=None, p_resend=None, coefficient=8, link_delay=1, seed=None) -> None:
         self.host_num = host_num # host 數量
         self.total_time = total_time # 模擬時間總長，時間以1為最小時間單位
         self.packet_num = packet_num # 每個 host 生成的封包數量
         # packet time是完成一個封包所需的時間，包含了送packet的link delay和ack的link delay
         # 假設等待ack的時間等同於link delay
         self.packet_time = packet_size + 2*link_delay # 每個封包完成所需要的時間，等同於slotted aloha的slote size
-        self.max_colision_wait_time = max_colision_wait_time # ALOHA, CSMA, CSMA/cD 重新發送封包的最大等待時間
-        self.p_resend = p_resend # slotted aloha 每個slot開始時，重送封包的機率
+        self.max_colision_wait_time = max_colision_wait_time if max_colision_wait_time != None else coefficient * self.packet_time * self.host_num # ALOHA, CSMA, CSMA/cD 重新發送封包的最大等待時間
+        self.p_resend = p_resend if p_resend != None else 1 / (coefficient * self.host_num) # ALOHA, CSMA, CSMA/cD 重新發送封包的最大等待時間
         self.link_delay = link_delay # link delay
         self.packet_size = packet_size
         if seed is None:
