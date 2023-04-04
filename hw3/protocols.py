@@ -201,13 +201,13 @@ def csma(setting: Setting, show_history=True):
 
     def maySend(host: Host, t: int) -> bool:
         for otherhost in hosts:
-            if otherhost != host and t - setting.link_delay > 0 and otherhost.sending(t - setting.link_delay):
+            if otherhost != host and t - setting.link_delay - 1 > 0 and otherhost.sending(t - setting.link_delay - 1):
                 return False
         return True
 
     # detect if host collide with others
     def collision(host: Host, end: int) -> bool:
-        start = end - setting.packet_time if end - setting.packet_time >= 0 else 0
+        start = end - setting.packet_time + 1 if end - setting.packet_time + 1 >= 0 else 0
         for t in range(start, end + 1):
             for otherhost in hosts:
                 if otherhost != host and otherhost.sending(t):
@@ -280,13 +280,13 @@ def csma_cd(setting: Setting, show_history=True):
 
     def maySend(host: Host, t: int) -> bool:
         for otherhost in hosts:
-            if otherhost != host and t > 0 and otherhost.sending(t - setting.link_delay):
+            if otherhost != host and t - setting.link_delay - 1 >= 0 and otherhost.sending(t - setting.link_delay - 1):
                 return False
         return True
 
     # detect if host collide with others "after" transmission
     def collision(host: Host, end: int) -> bool:
-        start = end - setting.packet_time if end - setting.packet_time >= 0 else 0
+        start = end - setting.packet_time + 1 if end - setting.packet_time + 1 >= 0 else 0
         for t in range(start, end + 1):
             for otherhost in hosts:
                 if otherhost != host and otherhost.sending(t):
