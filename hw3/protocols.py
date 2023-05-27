@@ -39,7 +39,6 @@ def show_hosts_history(hosts: list[Host], setting: Setting):
 
 def aloha(setting: Setting, show_history=True):
     packets = setting.gen_packets()
-    print(packets)
     hosts = [Host("", packets[i], "idle", 0) for i in range(setting.host_num)]
     successTime = 0
     idleTime = 0
@@ -103,6 +102,7 @@ def aloha(setting: Setting, show_history=True):
             idleTime += 1
 
     if show_history:
+        print('aloha')
         show_hosts_history(hosts, setting)
 
     success_rate = round(successTime * setting.packet_time / setting.total_time, 2)
@@ -112,7 +112,6 @@ def aloha(setting: Setting, show_history=True):
 
 def slotted_aloha(setting: Setting, show_history=True):
     packets = setting.gen_packets()
-    print(packets)
     hosts = [Host("", packets[i], "idle", 0) for i in range(setting.host_num)]
     successTime = 0
     idleTime = 0
@@ -185,6 +184,7 @@ def slotted_aloha(setting: Setting, show_history=True):
                     host.packetNo += 1 if host.packetNo < len(host.packet_gentime) else 0
 
     if show_history:
+        print("slotted_aloha")
         show_hosts_history(hosts, setting)
 
     success_rate = round(successTime * setting.packet_time / setting.total_time, 2)
@@ -194,7 +194,6 @@ def slotted_aloha(setting: Setting, show_history=True):
 
 def csma(setting: Setting, show_history=True):
     packets = setting.gen_packets()
-    print(packets)
     hosts = [Host("", packets[i], "idle", 0) for i in range(setting.host_num)]
     successTime = 0
     idleTime = 0
@@ -264,6 +263,7 @@ def csma(setting: Setting, show_history=True):
             idleTime += 1
 
     if show_history:
+        print("csma")
         show_hosts_history(hosts, setting)
 
     success_rate = round(successTime * setting.packet_time / setting.total_time, 2)
@@ -273,7 +273,6 @@ def csma(setting: Setting, show_history=True):
 
 def csma_cd(setting: Setting, show_history=True):
     packets = setting.gen_packets()
-    print(packets)
     hosts = [Host("", packets[i], "idle", 0) for i in range(setting.host_num)]
     successTime = 0
     idleTime = 0
@@ -356,6 +355,7 @@ def csma_cd(setting: Setting, show_history=True):
             idleTime += 1
 
     if show_history:
+        print("csma_cd")
         show_hosts_history(hosts, setting)
 
     success_rate = round(successTime * setting.packet_time / setting.total_time, 2)

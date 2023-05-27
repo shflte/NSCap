@@ -3,10 +3,21 @@ from setting import Setting
 import random
 import matplotlib.pyplot as plt
 
+def printRates(success_rate, idle_rate, collision_rate):
+    print(f'success_rate: {success_rate}\nidle_rate: {idle_rate}\ncollision_rate: {collision_rate}\n')
+
+setting = Setting(host_num=3, total_time=100, packet_num=4, max_colision_wait_time=20, p_resend=0.3, packet_size=5, link_delay=0, seed=109550100)
+printRates(*(protocols.aloha(setting, True)))
+printRates(*(protocols.slotted_aloha(setting, True)))
+printRates(*(protocols.csma(setting, True)))
+printRates(*(protocols.csma_cd(setting, True)))
+
+exit(0)
+
 def plotThing(title: str, xlabel: str, ylabel: str, alohaList: list(), slotted_alohaList: list(), csmaList: list(), csma_cdList: list(), xList: list(), filename: str):
     plt.title(title)
-    plt.plot(xList, alohaList, marker='o', label='ALOHA')
-    plt.plot(xList, slotted_alohaList, marker='s', label='Slotted ALOHA')
+    # plt.plot(xList, alohaList, marker='o', label='ALOHA')
+    # plt.plot(xList, slotted_alohaList, marker='s', label='Slotted ALOHA')
     plt.plot(xList, csmaList, marker='D', label='CSMA')
     plt.plot(xList, csma_cdList, marker='*',label='CSMA/CD')
     plt.xticks(xList)
@@ -38,7 +49,7 @@ csma_cd_collision_rateList = []
 
 # 3. redo
 # 4.
-settings = [Setting(coefficient=c) for c in range(1, 31)]
+# settings = [Setting(coefficient=c) for c in range(1, 31)]
 # 5.
 # settings = [Setting(packet_num=p) for p in range(100, 1050, 50)]
 # 6. 
@@ -46,9 +57,9 @@ settings = [Setting(coefficient=c) for c in range(1, 31)]
 # 7. 
 # settings = [Setting(packet_size=p) for p in range(1, 20)]
 # 8.
-# link_delay= [0,1,2,3]
-# packet_size_list= [7,5,3,1] # To ensure that the packet_time remains constant.
-# settings = [Setting(link_delay=l, packet_siz=p) for l,p in zip(link_delay_list, packet_size_list)]
+link_delay_list= [0,1,2,3]
+packet_size_list= [7,5,3,1] # To ensure that the packet_time remains constant.
+settings = [Setting(link_delay=l, packet_size=p) for l,p in zip(link_delay_list, packet_size_list)]
 
 for setting in settings:
     aloha_success_rate, aloha_idle_rate, aloha_collision_rate = protocols.aloha(setting, False)
@@ -74,10 +85,11 @@ for setting in settings:
     csma_collision_rateList.append(csma_collision_rate)
     csma_cd_collision_rateList.append(csma_cd_collision_rate)
 
-xlist = list(range(1, 31))
-title = "Influence of Coefficient"
-xlabel = "Coefficient"
+xlist = link_delay_list
+title = "Influence of Link Delay"
+xlabel = "Link Delay"
 # ylabel = 
-plotThing(title, xlabel, "Success Rate", aloha_success_rateList, slotted_aloha_success_rateList, csma_success_rateList, csma_cd_success_rateList, xlist, "4-1")
-plotThing(title, xlabel, "Idle Rate", aloha_idle_rateList, slotted_aloha_idle_rateList, csma_idle_rateList, csma_cd_idle_rateList, xlist, "4-2")
-plotThing(title, xlabel, "Collision Rate", aloha_collision_rateList, slotted_aloha_collision_rateList, csma_collision_rateList, csma_cd_collision_rateList, xlist, "4-3")
+plotThing(title, xlabel, "Success Rate", aloha_success_rateList, slotted_aloha_success_rateList, csma_success_rateList, csma_cd_success_rateList, xlist, "8-1")
+plotThing(title, xlabel, "Idle Rate", aloha_idle_rateList, slotted_aloha_idle_rateList, csma_idle_rateList, csma_cd_idle_rateList, xlist, "8-2")
+plotThing(title, xlabel, "Collision Rate", aloha_collision_rateList, slotted_aloha_collision_rateList, csma_collision_rateList, csma_cd_collision_rateList, xlist, "8-3")
+
