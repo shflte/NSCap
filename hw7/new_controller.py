@@ -19,7 +19,7 @@ from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER
 from ryu.controller.handler import set_ev_cls
 from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet
-from ryu.lib.packet import ethernet
+from ryu.lib.packet import ethernet, icmp, ipv4, arp, tcp, udp
 
 
 class ExampleSwitch13(app_manager.RyuApp):
@@ -79,7 +79,7 @@ class ExampleSwitch13(app_manager.RyuApp):
         self.mac_to_port[dpid][src] = in_port
 
         # if in packet is icmp and in port is 3 or 4, drop it
-        if eth_pkt.ethertype == 0x0800 and (in_port == 3 or in_port == 4):
+        if pkt.get_protocol(icmp.icmp) and (in_port == 3 or in_port == 4):
             actions = []
             # construct packet_out message and send it.
             self.add_flow(datapath, 1, match, actions)
