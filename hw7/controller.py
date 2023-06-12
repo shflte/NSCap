@@ -2,8 +2,8 @@ from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER
 from ryu.controller.handler import set_ev_cls
-from ryu.ofproto import ofproto_v1_3
-from ryu.lib.packet import packet
+from ryu.ofproto import ether, inet, ofproto_v1_3
+from ryu.lib.packet import packet, ethernet, ipv4
 from ryu.lib.packet import ethernet
 
 class Switch(app_manager.RyuApp):
@@ -72,7 +72,7 @@ class Switch(app_manager.RyuApp):
         # Table 1: filter_table_1
         # Priority 0: ICMP packets go to filter_table_2, others go to forward_table
         match = parser.OFPMatch(eth_type=eth_pkt.ethertype)
-        if eth_pkt.ethertype == ether_types.ETH_TYPE_IP:
+        if eth_pkt.ethertype == ether.ETH_TYPE_IP:
             ip_pkt = pkt.get_protocol(ipv4.ipv4)
             if ip_pkt.proto == inet.IPPROTO_ICMP:
                 actions = [parser.OFPActionOutput(ofproto.OFPP_NORMAL)]  # Send to filter_table_2
