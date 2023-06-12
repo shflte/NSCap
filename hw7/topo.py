@@ -6,10 +6,10 @@ class Topo1( Topo ):
     def build( self ):
         "Create custom topo."
 
-        H1 = self.addHost( 'h1' )
-        H2 = self.addHost( 'h2' )
-        H3 = self.addHost( 'h3' )
-        H4 = self.addHost( 'h4' )
+        H1 = self.addHost('h1', ip='10.0.0.1/24')
+        H2 = self.addHost('h2', ip='10.0.0.2/24')
+        H3 = self.addHost('h3', ip='10.0.0.3/24')
+        H4 = self.addHost('h4', ip='10.0.0.4/24')
 
         S1 = self.addSwitch( 's1' )
 
@@ -24,10 +24,10 @@ class Topo2( Topo ):
     def build( self ):
         "Create custom topo."
 
-        H5 = self.addHost( 'h5' )
-        H6 = self.addHost( 'h6' )
-        H7 = self.addHost( 'h7' )
-        H8 = self.addHost( 'h8' )
+        H5 = self.addHost('h5', ip='10.0.0.5/24')
+        H6 = self.addHost('h6', ip='10.0.0.6/24')
+        H7 = self.addHost('h7', ip='10.0.0.7/24')
+        H8 = self.addHost('h8', ip='10.0.0.8/24')
 
         S2 = self.addSwitch( 's2' )
 
