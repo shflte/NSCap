@@ -13,10 +13,10 @@ class Topo1( Topo ):
 
         S1 = self.addSwitch( 's1' )
 
-        self.addLink( S1, H1 )
-        self.addLink( S1, H2 )
-        self.addLink( S1, H3 )
-        self.addLink( S1, H4 )
+        self.addLink( S1, H1, port1=1, port2=1)
+        self.addLink( S1, H2, port1=2, port2=1)
+        self.addLink( S1, H3, port1=3, port2=1)
+        self.addLink( S1, H4, port1=4, port2=1)
 
 class Topo2( Topo ):
     "Simple topology example."
@@ -31,10 +31,10 @@ class Topo2( Topo ):
 
         S2 = self.addSwitch( 's2' )
 
-        self.addLink( S2, H5 )
-        self.addLink( S2, H6 )
-        self.addLink( S2, H7 )
-        self.addLink( S2, H8 )
+        self.addLink( S2, H5, port1=1, port2=1)
+        self.addLink( S2, H6, port1=2, port2=1)
+        self.addLink( S2, H7, port1=3, port2=1)
+        self.addLink( S2, H8, port1=4, port2=1)
 
 
 topos = {
