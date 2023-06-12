@@ -79,10 +79,10 @@ class ExampleSwitch13(app_manager.RyuApp):
         self.mac_to_port[dpid][src] = in_port
 
         # if in packet is icmp and in port is 3 or 4, drop it
-        if pkt.get_protocol(icmp.icmp) and (in_port == 3 or in_port == 4):
+        if in_port == 3 or in_port == 4 and pkt.get_protocol(icmp.icmp):
             actions = []
             # construct packet_out message and send it.
-            self.add_flow(datapath, 1, match, actions)
+            self.add_flow(datapath, 1, pkt.get_protocol(icmp.icmp), actions)
         else:
             # if the destination mac address is already learned,
             # decide which port to output the packet, otherwise FLOOD.
